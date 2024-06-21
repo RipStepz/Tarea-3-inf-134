@@ -33,27 +33,31 @@ void registro_cuentas::agregar(cuenta c){
     int Index = hash(c.rol);
     string actual = tabla[Index].rol;
 
+    if (actual == c.rol){
+         cout <<"Rol ya existente"<< endl;
+    }
+
     if (actual == VACIO){
         
         tabla[Index] = c;
         ranuras_ocupadas += 1;
     }
+
     else{
 
-        if (ranuras_ocupadas == ranuras){
-            redimensionar(ranuras + 5);
-        }
+        // if (ranuras_ocupadas == ranuras){
+        //     redimensionar(ranuras + 5);
+        // }
     
         Index -= 1;
         int contador = 0;
-        while ( (actual != VACIO)){
+        while ((actual != VACIO)){
             
             Index += 1;
             Index = p(tabla[Index].rol, Index);
             actual = tabla[Index].rol;
             
         }
-
         tabla[Index] = c;
         ranuras_ocupadas += 1;   
     }
@@ -69,10 +73,11 @@ cuenta registro_cuentas::obtener(string rol){
     if (tabla[pos].rol == rol){
     //cout <<"rol encontrado";
     tabla[pos].index = pos;
+    cout << tabla[pos].nombre << " " << tabla[pos].descripcion <<endl;
     return tabla[pos]; // registro encontrado, búsqueda exitosa
     }
     else{
-        //cout <<"rol no encontrado";
+        cout <<"Rol no existente" << endl;
         tabla[pos].index = pos;
         return tabla[pos];
     }
@@ -127,5 +132,7 @@ void registro_cuentas::redimensionar(int n) {
     }
 
 void registro_cuentas::estadisticas(){
-    
+    cout << "RANURAS OCUPADAS: " << ranuras_ocupadas <<endl;
+    cout << "RANURAS TOTALES: " << ranuras <<endl;
+    cout << "FACTOR DE CARGA: " << ranuras_ocupadas/ranuras<<endl;
 }
