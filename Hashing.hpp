@@ -21,6 +21,7 @@ float factor_de_carga = 0.0;
 cuenta* tabla; // Aca se almacenaran los elementos de la tabla
 //cuenta* x;
 int ranuras = 15; // Cuantas ranuras tiene la tabla hash (inicialmente)
+int ranuras_ocupadas = 0;
 static const string VACIO;
 int hash(string rol); // Se obtiene el hash dado el rol
 int p(string rol, int i); // Se otiene la ranura a revisar en caso de colisión dado el rol y el intento i
@@ -35,8 +36,6 @@ void eliminar(string rol); // Se elimina la cuenta
 void modificar(string rol, string descripcion); // Se modifica la descripcion del rol
 void redimensionar(int n); // Se redimensiona la tabla a n espacios
 void estadisticas(); // Debe mostrar las estadisticas
-//void auxiliar_agregar(cuenta* tabla, string rol_, string nombre_ , string info);
-//string auxiliar_agregar2(int i, cuenta* x);
 };
 
 #endif

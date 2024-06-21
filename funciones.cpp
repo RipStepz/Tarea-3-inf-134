@@ -36,19 +36,26 @@ void registro_cuentas::agregar(cuenta c){
     if (actual == VACIO){
         
         tabla[Index] = c;
+        ranuras_ocupadas += 1;
     }
     else{
 
+        if (ranuras_ocupadas == ranuras){
+            redimensionar(ranuras + 5);
+        }
+    
         Index -= 1;
         int contador = 0;
-        while ( (actual != VACIO) && (contador <= ranuras)){
+        while ( (actual != VACIO)){
             
             Index += 1;
             Index = p(tabla[Index].rol, Index);
             actual = tabla[Index].rol;
+            
         }
 
-        tabla[Index] = c;   
+        tabla[Index] = c;
+        ranuras_ocupadas += 1;   
     }
 }
 
@@ -60,12 +67,12 @@ cuenta registro_cuentas::obtener(string rol){
     pos = (inicio + p(rol, i)) % ranuras; // próxima ranura en la secuencia
     }
     if (tabla[pos].rol == rol){
-    cout <<"rol encontrado";
+    //cout <<"rol encontrado";
     tabla[pos].index = pos;
     return tabla[pos]; // registro encontrado, búsqueda exitosa
     }
     else{
-        cout <<"rol no encontrado";
+        //cout <<"rol no encontrado";
         tabla[pos].index = pos;
         return tabla[pos];
     }
@@ -74,18 +81,51 @@ cuenta registro_cuentas::obtener(string rol){
 void registro_cuentas::eliminar(string rol){
     
     cuenta Borrar = obtener(rol);
-    
-    if (Borrar.rol != VACIO){
-
     int index = Borrar.index;
+
+    if (Borrar.rol != VACIO){
     tabla[index].rol = VACIO;
     tabla[index].nombre = "";
     tabla[index].descripcion = "";
-
+    cout << "eliminado con exito el rol: " <<  rol << endl;
     }
-     
+
     else{
         cout << "Rol no encontrado para eliminar" << endl;
     }
 }
 
+void registro_cuentas::modificar(string rol, string descripcion){
+    
+    cuenta Modificar = obtener(rol);
+    int index = Modificar.index;
+
+    if (Modificar.rol != VACIO){
+        tabla[index].descripcion = descripcion;
+        cout<< "se modifico la descripcion a: " << descripcion<<endl;
+    }
+}
+
+void registro_cuentas::redimensionar(int n) {
+        
+        cuenta* nueva_tabla = new cuenta[n];
+
+        for (int i = 0; i < n; ++i) {
+            nueva_tabla[i].rol = VACIO; // Marcar todas las ranuras como vacías
+        }
+
+        for (int i = 0; i < ranuras; ++i) {
+            nueva_tabla[i].rol = tabla[i].rol;
+            nueva_tabla[i].nombre = tabla[i].rol;
+            nueva_tabla[i].descripcion = tabla[i].rol;
+        }
+
+        delete[] tabla;
+        tabla = nueva_tabla;
+        ranuras = n;
+        ranuras_ocupadas = 0;
+    }
+
+void registro_cuentas::estadisticas(){
+    
+}

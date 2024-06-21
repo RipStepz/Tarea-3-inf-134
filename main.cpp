@@ -17,7 +17,7 @@ int main()
     cuenta obtenida = registro.obtener("113131313-3");
     cout << "Rol: " << obtenida.rol << endl;
     cout << "Nombre: " << obtenida.nombre << endl;
-    cout << "Descripcion: " << obtenida.descripcion << endl;
+    cout << "Descripcion: " << obtenida.descripcion << endl <<endl;
 
     cuenta nueva_cuenta2;
     nueva_cuenta2.rol = "14141414-4";
@@ -29,7 +29,22 @@ int main()
     obtenida = registro.obtener("14141414-4");
     cout << "Rol: " << obtenida.rol << endl;
     cout << "Nombre: " << obtenida.nombre << endl;
-    cout << "Descripcion: " << obtenida.descripcion << endl;
+    cout << "Descripcion: " << obtenida.descripcion << endl <<endl;
+
+    registro.eliminar("14141414-4");
+    
+    obtenida = registro.obtener("14141414-4");
+    cout << endl <<"Rol: " << obtenida.rol << endl;
+    cout << "Nombre: " << obtenida.nombre << endl;
+    cout << "Descripcion: " << obtenida.descripcion << endl <<endl;
+
+    registro.modificar("113131313-3", "Una_estudiante_de_arte");
+
+    obtenida = registro.obtener("113131313-3");
+    cout << "Rol: " << obtenida.rol << endl;
+    cout << "Nombre: " << obtenida.nombre << endl;
+    cout << "Descripcion: " << obtenida.descripcion << endl <<endl;
+
 
     return 0;
 }
