@@ -10,6 +10,7 @@ struct cuenta {
  // El rol es el identificador de la persona.
  // El nombre y la descripcion son valores asociados al rol
 string rol, nombre, descripcion;
+int index;
 };
 
 class registro_cuentas {
@@ -26,7 +27,8 @@ int p(string rol, int i); // Se otiene la ranura a revisar en caso de colisión 
 
 public:
 
-registro_cuentas() {} // (Recuerde que puede crear con distintos parametros)
+registro_cuentas();
+~registro_cuentas();
 cuenta obtener(string rol); // Dado el rol, devuelve la cuenta con ese rol
 void agregar(cuenta c); // Se agrega una cuenta a la tabla
 void eliminar(string rol); // Se elimina la cuenta
