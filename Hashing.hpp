@@ -6,6 +6,7 @@ using namespace std;
 
 int auxilar_hash(string rol); // obtener un entero para la funcion hash
 
+
 struct cuenta {
  // El rol es el identificador de la persona.
  // El nombre y la descripcion son valores asociados al rol
@@ -36,6 +37,7 @@ void eliminar(string rol); // Se elimina la cuenta
 void modificar(string rol, string descripcion); // Se modifica la descripcion del rol
 void redimensionar(int n); // Se redimensiona la tabla a n espacios
 void estadisticas(); // Debe mostrar las estadisticas
+float Factor_de_carga(int r_ocupadas, int r_max); // obtiene el factor de carga
 };
 
 #endif

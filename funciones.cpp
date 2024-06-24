@@ -25,43 +25,38 @@ int registro_cuentas::p(string rol, int i){
     if (i == ranuras){
     return 0;
     } 
-    return (c1*i*i + c2*i + c3) % ranuras;
+    return (c1*i*i + c2*i + c3); //p es un valor que se le suma al índice inicial. el %ranuras se hace al valor de p + inicio.
 }
 
 void registro_cuentas::agregar(cuenta c){
+    int inicio; //indice de referencia, es el asignado a la cuenta c
+    int pos = inicio = hash(c.rol); //pos es el índice que usaremos para movernos por la tabla.
+    int contador = 0;
 
-    int Index = hash(c.rol);
-    string actual = tabla[Index].rol;
+    while(tabla[pos].rol != VACIO && tabla[pos].rol != c.rol && contador < ranuras){ //se recorre la tabla hastan que se encuentre un espacio vacío, se encuentre que el rol  ya existe, o se recorra por completo la tabla.
+        pos = (p(c.rol, contador) + inicio)%ranuras; // (indice inicial + el valor entregado por p)%ranuras asegura que pos siempre se mueva en el rango de la tabla.
+        contador += 1;
+    };
 
-    if (actual == c.rol){
-         cout <<"Rol ya existente"<< endl;
-    }
-
-    if (actual == VACIO){
-        
-        tabla[Index] = c;
-        ranuras_ocupadas += 1;
-    }
-
-    else{
-
-        // if (ranuras_ocupadas == ranuras){
-        //     redimensionar(ranuras + 5);
-        // }
+    if (tabla[pos].rol == c.rol){
+        cout <<"Rol ya existente"<<endl;
+    } 
     
-        Index -= 1;
-        int contador = 0;
-        while ((actual != VACIO)){
-            
-            Index += 1;
-            Index = p(tabla[Index].rol, Index);
-            actual = tabla[Index].rol;
-            
-        }
-        tabla[Index] = c;
-        ranuras_ocupadas += 1;   
-    }
-}
+    else if (tabla[pos].rol == VACIO) {
+        c.index = pos;
+        tabla[pos] = c;
+        ranuras_ocupadas += 1;
+        Factor_de_carga(ranuras_ocupadas, ranuras);
+        //cout << "agregado "<<tabla[pos].rol<<" en la ranura: "<<pos<<endl;
+
+    } else if (factor_de_carga >= 0.6){
+        
+        redimensionar(ranuras * 2);
+        agregar(c);
+        
+    };
+    
+};
 
 cuenta registro_cuentas::obtener(string rol){
     int inicio;
@@ -73,7 +68,7 @@ cuenta registro_cuentas::obtener(string rol){
     if (tabla[pos].rol == rol){
     //cout <<"rol encontrado";
     tabla[pos].index = pos;
-    cout << tabla[pos].nombre << " " << tabla[pos].descripcion <<endl;
+    //cout << tabla[pos].nombre << " " << tabla[pos].descripcion <<endl;
     return tabla[pos]; // registro encontrado, búsqueda exitosa
     }
     else{
@@ -92,7 +87,8 @@ void registro_cuentas::eliminar(string rol){
     tabla[index].rol = VACIO;
     tabla[index].nombre = "";
     tabla[index].descripcion = "";
-    cout << "eliminado con exito el rol: " <<  rol << endl;
+    ranuras_ocupadas -=1;
+    Factor_de_carga(ranuras_ocupadas , ranuras);
     }
 
     else{
@@ -107,7 +103,9 @@ void registro_cuentas::modificar(string rol, string descripcion){
 
     if (Modificar.rol != VACIO){
         tabla[index].descripcion = descripcion;
-        cout<< "se modifico la descripcion a: " << descripcion<<endl;
+    }
+    else{
+        cout<< "Rol no existente"<<endl;
     }
 }
 
@@ -134,5 +132,5 @@ void registro_cuentas::redimensionar(int n) {
 void registro_cuentas::estadisticas(){
     cout << "RANURAS OCUPADAS: " << ranuras_ocupadas <<endl;
     cout << "RANURAS TOTALES: " << ranuras <<endl;
-    cout << "FACTOR DE CARGA: " << ranuras_ocupadas/ranuras<<endl;
+    cout << "FACTOR DE CARGA: " << Factor_de_carga(ranuras_ocupadas, ranuras) <<endl;
 }
