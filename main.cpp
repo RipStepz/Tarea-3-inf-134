@@ -5,13 +5,24 @@
 
 using namespace std;
 
+/*****
+* int main
+******
+* Resumen:
+* Función principal que gestiona operaciones en un registro de cuentas utilizando comandos leídos desde un archivo de texto.
+******
+* Input:
+* Ninguno explícito, pero utiliza datos del archivo "prueba.txt" que contiene comandos y datos para operaciones en el registro.
+******
+* Returns:
+* int : Código de salida del programa (0 indica ejecución exitosa).
+*****/
+
 int main(){
 
-    
     ifstream fich("prueba.txt");
     registro_cuentas registro;
     cuenta nueva_cuenta, obtenida;
-
     string palabra, rol, nombre, descripcion;
     
     while (fich >> palabra) {
@@ -40,24 +51,23 @@ int main(){
             fich >> rol;
             registro.eliminar(rol);
         }
-        
         else if(palabra == "MODIFICAR"){
+            
             fich >> rol;
             fich >> descripcion;
 
             registro.modificar(rol, descripcion); 
-           }
-
+        }
         else if(palabra == "ESTADISTICAS"){
+            
             registro.estadisticas();
         }
         else {
+            
             cerr << "Comando no reconocido: " << palabra << endl;
         }
-        
     }
     
-
     // nueva_cuenta.rol = "99999999-9";
     // nueva_cuenta.nombre = "Pablo";
     // nueva_cuenta.descripcion = "Un_estudiante_de_historia";

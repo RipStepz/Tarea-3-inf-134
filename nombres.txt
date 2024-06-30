@@ -1,0 +1,21 @@
+Nombre y rol:
+-Arturo Almonacid 202373515-9
+-Martina Hidalgo 202373597-3
+
+Destalle:
+
+Arturo:
+ -registro_cuentas
+ -p
+ -agregar
+ -modificar
+ -redimensionar
+ -lectura de archivo (main)
+
+Martina:
+ -hash
+ -auxilar_hash
+ -obtener
+ -eliminar
+ -estadisticas
+ -Factor de carga 
